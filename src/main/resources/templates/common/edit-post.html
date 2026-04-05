@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragment/NavBar :: mynavbarlayout(~{:: section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit-Post</title>
+</head>
+<body>
+<section>
+
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: rgba(255,255,255,0.7);
+            --text: #1e293b;
+            --primary: #6366f1;
+        }
+
+        /* Dark Mode */
+        .dark {
+            --bg: #0f172a;
+            --card: rgba(30,41,59,0.7);
+            --text: #e2e8f0;
+        }
+
+        /* Body */
+        body {
+            background: linear-gradient(135deg,#e0e7ff,#f8fafc);
+            color: var(--text);
+            transition: 0.4s;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* Card */
+        .card {
+            backdrop-filter: blur(14px);
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            animation: fade 0.7s ease;
+        }
+
+        /* Animation */
+        @keyframes fade {
+            from {opacity:0; transform: translateY(30px);}
+            to {opacity:1; transform: translateY(0);}
+        }
+        .text-danger {
+            color: red;
+        }
+
+        /* Topbar */
+        .topbar {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:20px;
+        }
+
+        /* Toggle */
+        .toggle {
+            cursor:pointer;
+            padding:8px 12px;
+            border-radius:10px;
+            background: var(--primary);
+            color:white;
+            border:none;
+        }
+
+        /* Grid */
+        .grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+
+        .full { grid-column: span 2; }
+
+        /* Input */
+        .input-box { position:relative; }
+
+        input, textarea, select {
+            width:100%;
+            padding:14px;
+            border-radius:12px;
+            border:1px solid #ddd;
+            background:transparent;
+            color: var(--text);
+            transition:0.3s;
+        }
+
+        label {
+            position:absolute;
+            top:14px;
+            left:14px;
+            color:#777;
+            transition:0.3s;
+            pointer-events:none;
+        }
+
+        /* Floating */
+        input:focus + label,
+        input:not(:placeholder-shown) + label,
+        textarea:focus + label,
+        textarea:not(:placeholder-shown) + label {
+            top:-8px;
+            font-size:12px;
+            background: var(--card);
+            padding:0 5px;
+            color: var(--primary);
+        }
+
+        /* Focus glow */
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow:0 0 12px rgba(99,102,241,0.4);
+        }
+
+        /* Upload */
+        .upload {
+            border:2px dashed #a5b4fc;
+            padding:25px;
+            text-align:center;
+            border-radius:14px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .upload:hover {
+            background: rgba(99,102,241,0.1);
+            transform: scale(1.02);
+        }
+
+        /* Preview */
+        .preview img {
+            width:100%;
+            border-radius:12px;
+            margin-top:10px;
+        }
+
+        /* Button */
+        button.submit {
+            margin-top:20px;
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            background: linear-gradient(135deg,#6366f1,#8b5cf6);
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+            transition:0.3s;
+            position:relative;
+            overflow:hidden;
+        }
+
+        /* Ripple */
+        button.submit:after {
+            content:"";
+            position:absolute;
+            width:0;
+            height:0;
+            background:rgba(255,255,255,0.3);
+            border-radius:50%;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            transition:0.5s;
+        }
+
+        button.submit:active:after {
+            width:200px;
+            height:200px;
+        }
+
+        /* Hover */
+        button.submit:hover {
+            transform:translateY(-2px);
+            box-shadow:0 10px 30px rgba(99,102,241,0.4);
+        }
+
+        /* Auto-resizing textarea */
+        .auto-resize {
+            resize: none;
+            overflow-y: hidden;
+            min-height: 100px;
+        }
+    </style>
+
+    <div class="container">
+
+        <div class="card">
+
+            <!-- Top -->
+            <div class="topbar">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button type="button" class="toggle" onclick="window.history.back()" title="Go Back" style="background: #64748b; padding: 8px 15px;">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 style="margin: 0;">✏️ Edit Blog Post</h2>
+                </div>
+                <button type="button" class="toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+            </div>
+
+            <!-- Success/Error Messages -->
+            <div th:if="${msg}" id="successMessage" th:text="${msg}" style="display:none;"></div>
+            <div th:if="${error}" id="errorMessage" th:text="${error}" style="display:none;"></div>
+
+            <form th:action="@{/blogdashborad/updatePost}" method="post" enctype="multipart/form-data" th:object="${post}">
+
+                <!-- Hidden fields for ID and existing image name -->
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{postImageName}" />
+
+                <div class="grid">
+
+                    <!-- Title -->
+                    <div class="input-box full">
+                        <input type="text" th:field="*{title}" placeholder=" ">
+                        <label>Post Title</label>
+                        <div class="text-danger" th:if="${#fields.hasErrors('title')}">
+                            <span th:errors="*{title}"></span>
+                        </div>
+                    </div>
+
+                    <!-- Category --->
+                    <div class="input-box">
+                        <select name="category" th:field="*{categoryId}">
+                            <option value="">Select Category</option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('categoryId')}">
+                            <span th:errors="*{categoryId}"></span>
+                        </div>
+                    </div>
+
+                    <!-- Upload -->
+                    <div class="input-box">
+                        <div class="upload" onclick="file.click()">📁 Change Image (Optional)</div>
+                        <input type="file" id="file" name="image" hidden onchange="preview(event)">
+
+                        <!-- Show existing image if available -->
+                        <div class="preview" id="preview">
+                            <img th:if="${post.postImageName}" th:src="@{'/postfiles/' + ${post.id} + '/' + ${post.postImageName}}" alt="Current Image">
+                        </div>
+                        <div class="text-danger" th:if="${error}" th:text="${error}"></div>
+                    </div>
+
+                    <!-- Short Description -->
+                    <div class="input-box full">
+                        <textarea name="shortDesc" th:field="*{shortDescription}" placeholder=" "></textarea>
+                        <label>Short Description</label>
+                        <div class="text-danger" th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="input-box full" style="margin-top: 10px;">
+                        <label style="position: relative; top: 0; left: 0; color: var(--primary); font-weight: bold; margin-bottom: 10px; display: block; pointer-events: auto;">📝 Post Content</label>
+                        <textarea id="content" name="content" th:field="*{content}" placeholder="Write your smart content here..."></textarea>
+                        <div class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+                    </div>
+
+                </div>
+
+                <button class="submit">💾 Update Post</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- TinyMCE Rich Text Editor -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script>
+    <script>
+        // Initialize TinyMCE
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount',
+            toolbar: 'undo redo | formatselect | bold italic backcolor forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image link | help',
+            height: 400,
+            branding: false,
+            promotion: false,
+            skin: localStorage.getItem("theme") === "dark" ? "oxide-dark" : "oxide",
+            content_css: localStorage.getItem("theme") === "dark" ? "dark" : "default"
+        });
+
+        window.onload = function () {
+            let msg = document.getElementById("successMessage");
+            let error = document.getElementById("errorMessage");
+            if (msg) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: msg.innerText,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            }
+            if (error) {
+                 Swal.fire({
+                     title: 'Error!',
+                     text: error.innerText,
+                     icon: 'error',
+                     confirmButtonText: 'OK'
+                 });
+            }
+        };
+
+        // Theme load
+        if(localStorage.getItem("theme") === "dark"){
+            document.body.classList.add("dark");
+            document.getElementById("themeBtn").innerText="☀️";
+        }
+
+        // Toggle
+        function toggleTheme(){
+            document.body.classList.toggle("dark");
+
+            if(document.body.classList.contains("dark")){
+                localStorage.setItem("theme","dark");
+                document.getElementById("themeBtn").innerText="☀️";
+            } else {
+                localStorage.setItem("theme","light");
+                document.getElementById("themeBtn").innerText="🌙";
+            }
+        }
+
+        // Preview
+        function preview(e){
+            let file = e.target.files[0];
+            if(file){
+                let reader = new FileReader();
+                reader.onload = function(ev){
+                    document.getElementById("preview").innerHTML =
+                        `<img src="${ev.target.result}">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>

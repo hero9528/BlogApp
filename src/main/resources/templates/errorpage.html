@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Something Went Wrong</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Floating circles background */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Glass card */
+        .card {
+            backdrop-filter: blur(20px);
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .error-code {
+            font-size: 80px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .message {
+            font-size: 20px;
+            margin: 15px 0;
+            opacity: 0.9;
+        }
+
+        .desc {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg,#22c55e,#4ade80);
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- Floating Background -->
+<div class="circle"></div>
+<div class="circle"></div>
+
+<!-- Error Card -->
+<div class="card">
+
+    <div class="error-code">500</div>
+
+    <div class="message">Oops! Something went wrong 😢</div>
+
+    <div class="desc" th:text="${error}">
+
+    </div>
+
+    <button class="btn" onclick="location.href='/blogdashborad/addPost'">🏠 Go Home</button>
+
+</div>
+
+<script>
+    function goHome(){
+        window.location.href = "/";
+    }
+</script>
+
+</body>
+</html>

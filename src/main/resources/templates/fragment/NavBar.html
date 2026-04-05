@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:fragment="mynavbarlayout(content)">
+<head>
+<meta charset="UTF-8">
+<title>MyBlogApp</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" type="text/css">
+<style>
+    /* Custom Navbar Styles */
+    .custom-navbar {
+        background: #1a202c; /* Dark background */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        padding: 15px 30px;
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        transition: background 0.3s ease;
+    }
+
+      .logout-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(239, 68, 68, 0.4);
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+    .navbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f7fafc; /* Light text color */
+        text-decoration: none;
+    }
+    .navbar-logo i {
+        color: #6366f1; /* Primary color from your theme */
+    }
+    .navbar-logo:hover {
+        color: #6366f1;
+        text-decoration: none;
+    }
+
+    .custom-navbar .nav-link {
+        color: #a0aec0; /* Lighter grey for links */
+        font-weight: 600;
+        margin: 0 15px;
+        position: relative;
+        transition: color 0.3s;
+    }
+    .custom-navbar .nav-link:hover {
+        color: #ffffff; /* White on hover */
+    }
+    .custom-navbar .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #6366f1;
+        transition: width 0.3s ease-in-out;
+    }
+    .custom-navbar .nav-link:hover::after {
+        width: 100%;
+    }
+
+
+
+</style>
+</head>
+	<style>
+		html, body {
+            height: 100%;
+        }
+
+        .main-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+	</style>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg custom-navbar">
+		<a class="navbar-logo" th:href="@{/}">
+            <i class="fa-solid fa-blog"></i>
+            <span>BlogApp</span>
+        </a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbar" aria-controls="navbar" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbar">
+			<ul class="navbar-nav mx-auto">
+				<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+
+                <li class="nav-item"><a sec:authorize="hasAuthority('ADMIN')" class="nav-link" th:href="@{/dashborad/admin}">Admin</a></li>
+
+				<li class="nav-item"><a  sec:authorize="hasAuthority('GUEST')" class="nav-link" th:href="@{/dashborad/guest}">Guest</a></li>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a sec:authorize="isAnonymous()" class="nav-link"
+										th:href="@{/auth/login-user}">Login</a>
+				</li>
+
+				<li class="nav-item"><a sec:authorize="isAnonymous()" class="nav-link"
+										th:href="@{/auth/signup-user}">Signup</a>
+				</li>
+
+
+				<li class="nav-item" sec:authorize="isAuthenticated()">
+					<form th:action="@{/logout}" method="post" style="display:inline;">
+						<button class="logout-btn">
+							<i class="fa-solid fa-right-from-bracket"></i> Logout
+						</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="main-wrapper">
+		<div th:replace="${content}" class="flex-grow-1"></div>
+	</div>
+
+</body>
+</html>

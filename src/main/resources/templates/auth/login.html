@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/NavBar :: mynavbarlayout(~{:: section})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+
+<section>
+
+    <style>
+
+        /* ===== THEME ===== */
+        :root{
+            --bg:#020617;
+            --card:rgba(30,41,59,0.7);
+            --text:#e2e8f0;
+            --input:#334155;
+            --primary:#6366f1;
+        }
+
+        .light{
+            --bg:#f1f5f9;
+            --card:#ffffff;
+            --text:#0f172a;
+            --input:#e2e8f0;
+            --primary:#4f46e5;
+        }
+
+        /* ===== BODY ===== */
+        body{
+            margin:0;
+            background: radial-gradient(circle at top,#6366f1,#020617);
+            color:var(--text);
+            font-family:Arial, sans-serif;
+            overflow:hidden;
+        }
+
+        /* ===== GLOW EFFECT ===== */
+        .glow{
+            position:absolute;
+            width:400px;
+            height:400px;
+            background:rgba(99,102,241,0.4);
+            filter:blur(120px);
+            top:10%;
+            left:10%;
+            animation:move 10s infinite alternate;
+        }
+
+        @keyframes move{
+            to{ transform:translate(250px,200px);}
+        }
+
+        /* ===== CENTER ===== */
+        .wrapper{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        /* ===== CARD ===== */
+        .card{
+            width:420px; /* 🔥 bigger */
+            padding:40px;
+            border-radius:16px;
+            background:var(--card);
+            backdrop-filter: blur(20px);
+            box-shadow:0 30px 80px rgba(0,0,0,0.5);
+            animation:fadeUp 0.7s ease;
+        }
+
+        /* ENTRY ANIMATION */
+        @keyframes fadeUp{
+            from{
+                opacity:0;
+                transform:translateY(40px) scale(0.95);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0) scale(1);
+            }
+        }
+
+        /* TITLE */
+        h2{
+            text-align:center;
+            margin-bottom:25px;
+            font-size:26px;
+            background:linear-gradient(135deg,#f59e0b,#ef4444);
+            -webkit-background-clip:text;
+            color:transparent;
+        }
+
+        /* INPUT */
+        .input-group{
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:var(--input);
+            color:var(--text);
+            outline:none;
+            transition:0.3s;
+        }
+
+        /* INPUT ANIMATION */
+        input:focus{
+            transform:scale(1.02);
+            box-shadow:0 0 0 2px var(--primary);
+        }
+
+        /* BUTTON */
+        .btn{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:linear-gradient(135deg,#6366f1,#8b5cf6);
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .btn:hover{
+            transform:translateY(-3px) scale(1.02);
+            box-shadow:0 15px 30px rgba(99,102,241,0.4);
+        }
+
+        /* TOGGLE */
+        .toggle{
+            position:absolute;
+            top:20px;
+            right:20px;
+            background:var(--primary);
+            border:none;
+            padding:8px 12px;
+            border-radius:8px;
+            color:white;
+            cursor:pointer;
+        }
+
+    </style>
+
+    <!-- Glow -->
+    <div class="glow"></div>
+
+    <!-- Theme Toggle -->
+    <button class="toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+
+    <div class="wrapper">
+
+        <div class="card">
+
+            <h2>Welcome Back</h2>
+
+            <!-- FORM -->
+            <form method="post" th:action="@{/login}">
+
+                <!-- Error Message -->
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Invalid email or password.
+                </div>
+
+                <!-- Logout Message -->
+                <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                    You have been logged out.
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="username" placeholder="Enter Email" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Enter Password" required>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        /* THEME */
+        const themeBtn = document.getElementById("themeBtn");
+
+        if(localStorage.getItem("theme")==="light"){
+            document.body.classList.add("light");
+            themeBtn.innerText="☀️";
+        }
+
+        function toggleTheme(){
+            document.body.classList.toggle("light");
+
+            if(document.body.classList.contains("light")){
+                localStorage.setItem("theme","light");
+                themeBtn.innerText="☀️";
+            }else{
+                localStorage.setItem("theme","dark");
+                themeBtn.innerText="🌙";
+            }
+        }
+
+    </script>
+
+</section>
+
+</body>
+</html>

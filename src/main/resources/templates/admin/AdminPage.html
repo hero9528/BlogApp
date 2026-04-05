@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragment/NavBar :: mynavbarlayout(~{:: section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+</head>
+<body>
+<section>
+    <style>
+        /* Default Light Theme */
+        :root {
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #222;
+            --shadow: rgba(0,0,0,0.08);
+        }
+
+        /* Dark Theme */
+        .dark {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e2e8f0;
+            --shadow: rgba(0,0,0,0.4);
+        }
+
+        /* Body */
+        body {
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        /* Container */
+        .dashboard {
+            padding: 30px;
+        }
+
+        /* Top bar */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        /* Toggle button */
+        .toggle-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: #3498db;
+            color: white;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Cards */
+        .card-btn {
+            background: var(--card);
+            padding: 30px 20px;
+            border-radius: 14px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .card-btn:hover {
+            transform: translateY(-6px);
+        }
+
+        /* Icons */
+        .icon {
+            width: 50px;
+            height: 50px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .posts { background:#3498db; }
+        .add { background:#2ecc71; }
+        .category { background:#9b59b6; }
+        .comments { background:#e67e22; }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: gray;
+        }
+    </style>
+
+    <div class="dashboard">
+
+        <!-- 🔥 Topbar -->
+        <div class="topbar">
+            <h2>Admin Dashboard</h2>
+            <button class="toggle-btn" onclick="toggleTheme()">🌙 Toggle </button>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid">
+
+            <div class="card-btn" onclick="location.href='/blogdashborad/allPost'">
+                <div class="icon posts">📄</div>
+                <h3>All Posts</h3>
+            </div>
+
+            <div class="card-btn" onclick="location.href='/blogdashborad/addPost'">
+                <div class="icon add">➕</div>
+                <h3>Add Post</h3>
+            </div>
+
+            <div class="card-btn" onclick="location.href='/admin/category/addcategory'">
+                <div class="icon category">📂</div>
+                <h3>Categories</h3>
+            </div>
+
+            <div class="card-btn" onclick="location.href='/blogdashborad/admin/allcomment'">
+                <div class="icon comments">💬</div>
+                <h3>Comments</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Load saved theme
+        if(localStorage.getItem("theme") === "dark"){
+            document.body.classList.add("dark");
+        }
+
+        // Toggle Theme
+        function toggleTheme(){
+            document.body.classList.toggle("dark");
+
+            if(document.body.classList.contains("dark")){
+                localStorage.setItem("theme","dark");
+            } else {
+                localStorage.setItem("theme","light");
+            }
+        }
+    </script>
+
+</section>
+</body>
+</html>
