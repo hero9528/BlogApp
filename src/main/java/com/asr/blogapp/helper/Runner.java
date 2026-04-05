@@ -27,8 +27,8 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        createRoleNotExists("ADMIN");
-        createRoleNotExists("GUEST");
+        createRoleNotExists("ROLE_ADMIN");
+        createRoleNotExists("ROLE_GUEST");
         createAdminUserIfNotExists();
 
     }
@@ -57,7 +57,7 @@ public class Runner implements CommandLineRunner {
             newAdminUser.setEmail(adminEmail);
             newAdminUser.setPassword(passwordEncoder.encode("asr123"));
 
-            Role role = roleRepositry.findByName("ADMIN");
+            Role role = roleRepositry.findByName("ROLE_ADMIN");
             List<Role> roleList = Arrays.asList(role);
             newAdminUser.setRoles(roleList);
             userRepositry.save(newAdminUser);

@@ -25,18 +25,18 @@ public class MySecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests.
                 requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/dashborad/admin").hasAuthority("ADMIN")
-                .requestMatchers("/dashborad/guest").hasAuthority("GUEST")
-                .requestMatchers("/admin/category/**").hasAuthority("ADMIN")
+                .requestMatchers("/dashborad/admin").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/dashborad/guest").hasAuthority("ROLE_GUEST")
+                .requestMatchers("/admin/category/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers
                         ("/blogdashborad/allPost","/blogdashborad/addPost",
                                 "/blogdashborad/savedPost","/blogdashborad/allPost/view/**",
                                 "/blogdashborad/deletePost/**", "/blogdashborad/updatePost/**")
-                .hasAnyAuthority("ADMIN", "GUEST")
+                .hasAnyAuthority("ROLE_ADMIN", "ROLE_GUEST")
                 .requestMatchers("/blogdashborad/approvePost/**", "/blogdashborad/rejectPost/**"
                         , "/blogdashborad/admin/allcomment", "/blogdashborad/admin/delete/**"
 
-                ).hasAuthority("ADMIN")
+                ).hasAuthority("ROLE_ADMIN")
 
 
 

@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
       guestUserExists.setPassword(passwordEncoder.encode(userSignupDto.getPassword()));
 
 
-      Role role =roleRepositry.findByName("GUEST");
+      Role role =roleRepositry.findByName("ROLE_GUEST");
 
         List<Role>  roleList = Arrays.asList(role);
 
