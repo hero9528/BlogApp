@@ -80,7 +80,7 @@ public class PostServiceImpl implements PostService {
         MyUserEntity loggedInUser = userRepositry.findByEmail(username);
 
         // check user role
-       boolean isAdmin = loggedInUser.getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"));
+       boolean isAdmin = loggedInUser.getRoles().stream().anyMatch(role -> role.getName().equals("ROLE_ADMIN"));
         Page<PostEntity> postPage;
        if (isAdmin) {
 
