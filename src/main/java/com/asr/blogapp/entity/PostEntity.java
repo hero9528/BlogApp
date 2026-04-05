@@ -26,7 +26,7 @@ public class PostEntity {
 	    private String title;
 
 	    @Lob
-	    @Column(nullable = false, columnDefinition = "TEXT")
+	    @Column(nullable = false, columnDefinition = "LONGTEXT")
 	    private String content;
 
 	    private String url;
