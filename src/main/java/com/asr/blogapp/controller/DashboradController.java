@@ -11,12 +11,12 @@ public class DashboradController {
 
     @GetMapping("/admin")
     public String showDashboradAdmin() {
-        return "/admin/AdminPage";
+        return "admin/AdminPage";
     }
 
     @GetMapping("/guest")
     public String showDashboradGuest() {
-        return "/guest/GuestDashborad";
+        return "guest/GuestDashborad";
     }
 
 }
