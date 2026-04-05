@@ -8,8 +8,8 @@ WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
-# Build the application
-RUN ./mvnw dependency:go-offline
+# Grant execute permission and build the application
+RUN chmod +x ./mvnw
 
 # Copy the rest of the application source code
 COPY src ./src
