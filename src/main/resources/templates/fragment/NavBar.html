@@ -113,9 +113,9 @@
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
 
-                <li class="nav-item"><a sec:authorize="hasAuthority('ADMIN')" class="nav-link" th:href="@{/dashborad/admin}">Admin</a></li>
+                <li class="nav-item"><a sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-link" th:href="@{/dashborad/admin}">Admin</a></li>
 
-				<li class="nav-item"><a  sec:authorize="hasAuthority('GUEST')" class="nav-link" th:href="@{/dashborad/guest}">Guest</a></li>
+				<li class="nav-item"><a  sec:authorize="hasAuthority('ROLE_GUEST')" class="nav-link" th:href="@{/dashborad/guest}">Guest</a></li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a sec:authorize="isAnonymous()" class="nav-link"

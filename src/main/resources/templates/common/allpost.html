@@ -342,12 +342,12 @@
                                 </div>
 
                                 <!-- Approve Button: Show if status is PENDING or REJECTED -->
-                                <a sec:authorize="hasAuthority('ADMIN')" th:if="${post.status == 'PENDING' or post.status == 'REJECTED'}" th:href="@{'/blogdashborad/approvePost'(postId=${post.id}, status='APPROVED', pageNo=${currentpage})}" class="action-btn approve" data-title="Approve">
+                                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:if="${post.status == 'PENDING' or post.status == 'REJECTED'}" th:href="@{'/blogdashborad/approvePost'(postId=${post.id}, status='APPROVED', pageNo=${currentpage})}" class="action-btn approve" data-title="Approve">
                                     <i class="fa-solid fa-check"></i>
                                 </a>
 
                                 <!-- Reject Button: Show if status is PENDING or APPROVED -->
-                                <a sec:authorize="hasAuthority('ADMIN')" th:if="${post.status == 'PENDING' or post.status == 'APPROVED'}" th:href="@{'/blogdashborad/rejectPost'(postId=${post.id}, status='REJECTED', pageNo=${currentpage})}" class="action-btn reject" data-title="Reject">
+                                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:if="${post.status == 'PENDING' or post.status == 'APPROVED'}" th:href="@{'/blogdashborad/rejectPost'(postId=${post.id}, status='REJECTED', pageNo=${currentpage})}" class="action-btn reject" data-title="Reject">
                                     <i class="fa-solid fa-xmark"></i>
                                 </a>
 
