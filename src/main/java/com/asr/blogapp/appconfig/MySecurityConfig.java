@@ -24,8 +24,8 @@ public class MySecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-
-        .authorizeHttpRequests((requests) -> requests.
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests((requests) -> requests.
                 requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/dashborad/admin").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/dashborad/guest").hasAuthority("ROLE_GUEST")
