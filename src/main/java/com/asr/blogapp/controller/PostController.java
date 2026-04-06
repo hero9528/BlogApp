@@ -94,7 +94,7 @@ public class PostController {
 
         PostDto savedPostDto = postService.savePost(postDto);
         if (savedPostDto != null) {
-            String uploadDirectryPath = "postfiles/" + savedPostDto.getId() + "/";
+            String uploadDirectryPath = System.getProperty("user.dir") + "/postfiles/" + savedPostDto.getId() + "/";
 
            boolean savedImage =  Helper.saveFile(uploadDirectryPath, imageName, imagePart);
 
@@ -168,7 +168,7 @@ public class PostController {
         if (!imagePart.isEmpty()) {
             String imageName = StringUtils.cleanPath(Objects.requireNonNull(imagePart.getOriginalFilename()));
             postDto.setPostImageName(imageName);
-            String uploadDirectryPath = "postfiles/" + postDto.getId() + "/";
+            String uploadDirectryPath = System.getProperty("user.dir") + "/postfiles/" + postDto.getId() + "/";
             Helper.saveFile(uploadDirectryPath, imageName, imagePart);
         }
 
