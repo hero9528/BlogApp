@@ -66,6 +66,14 @@ public class PostController {
     public String savedPost(@ModelAttribute("post") @Valid PostDto postDto, BindingResult  bindingResult,
                             RedirectAttributes redirectAttributes, @RequestParam("image")MultipartFile imagePart, Model model) {
 
+        // DEBUG START
+        System.out.println("DEBUG START =====");
+        System.out.println("Image empty: " + imagePart.isEmpty());
+        System.out.println("Image name: " + imagePart.getOriginalFilename());
+        System.out.println("Post title: " + postDto.getTitle());
+        System.out.println("Binding error: " + bindingResult.hasErrors());
+        System.out.println("DEBUG END =====");
+// DEBUG END
 
         // check category error ----
 
