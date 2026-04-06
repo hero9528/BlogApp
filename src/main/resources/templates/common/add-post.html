@@ -208,7 +208,7 @@
 
             <form th:action="@{/blogdashborad/savedPost}" method="post" enctype="multipart/form-data" th:object="${post}"
                   onsubmit="return submitForm()">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
 
 
                 <div class="grid">
