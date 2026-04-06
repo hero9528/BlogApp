@@ -25,8 +25,9 @@ public class MySecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests((requests) -> requests.
-                requestMatchers("/auth/**").permitAll()
+                .authorizeHttpRequests((requests) -> requests
+                                .requestMatchers("/blogdashborad/**").hasAnyRole("ADMIN", "GUEST")
+                        .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/dashborad/admin").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/dashborad/guest").hasAuthority("ROLE_GUEST")
                 .requestMatchers("/admin/category/**").hasAuthority("ROLE_ADMIN")
