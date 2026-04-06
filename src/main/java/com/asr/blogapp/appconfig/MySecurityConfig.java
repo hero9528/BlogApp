@@ -24,7 +24,6 @@ public class MySecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
                                 .requestMatchers("/blogdashborad/**").hasAnyRole("ADMIN", "GUEST")
                         .requestMatchers("/auth/**").permitAll()
