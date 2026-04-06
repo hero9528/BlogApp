@@ -3,6 +3,7 @@
 	th:fragment="mynavbarlayout(content)">
 <head>
 <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MyBlogApp</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
@@ -80,6 +81,21 @@
     .custom-navbar .nav-link:hover::after {
         width: 100%;
     }
+	@media (max-width: 768px) {
+    .custom-navbar {
+        padding: 10px 15px;
+    }
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .logout-btn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+    }
+}
 
 
 
@@ -99,7 +115,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg custom-navbar">
+	<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
 		<a class="navbar-logo" th:href="@{/}">
             <i class="fa-solid fa-blog"></i>
             <span>BlogApp</span>
@@ -141,6 +157,9 @@
 	<div class="main-wrapper">
 		<div th:replace="${content}" class="flex-grow-1"></div>
 	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
