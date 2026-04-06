@@ -26,20 +26,20 @@ public class MySecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/blogdashborad/**").permitAll() //hasAnyRole("ADMIN", "GUEST")
+                                .requestMatchers("/blogdashborad/**").hasAnyRole("ADMIN", "GUEST")
                         .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/dashborad/admin").permitAll() //hasAuthority("ROLE_ADMIN")
-                .requestMatchers("/dashborad/guest").permitAll() //hasAuthority("ROLE_GUEST")
-                .requestMatchers("/admin/category/**").permitAll() //hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/dashborad/admin").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/dashborad/guest").hasAuthority("ROLE_GUEST")
+                .requestMatchers("/admin/category/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers
                         ("/blogdashborad/allPost","/blogdashborad/addPost",
                                 "/blogdashborad/savedPost/**","/blogdashborad/allPost/view/**",
-                                "/blogdashborad/deletePost/**", "/blogdashborad/updatePost/**").permitAll()
-               // .hasAnyAuthority("ROLE_ADMIN", "ROLE_GUEST")
+                                "/blogdashborad/deletePost/**", "/blogdashborad/updatePost/**")
+                  .hasAnyAuthority("ROLE_ADMIN", "ROLE_GUEST")
                 .requestMatchers("/blogdashborad/approvePost/**", "/blogdashborad/rejectPost/**"
                         , "/blogdashborad/admin/allcomment", "/blogdashborad/admin/delete/**"
 
-                ).permitAll() //hasAuthority("ROLE_ADMIN")
+                ).hasAuthority("ROLE_ADMIN")
 
 
 
