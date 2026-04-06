@@ -33,7 +33,7 @@ public class MySecurityConfig {
                 .requestMatchers("/admin/category/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers
                         ("/blogdashborad/allPost","/blogdashborad/addPost",
-                                "/blogdashborad/savedPost","/blogdashborad/allPost/view/**",
+                                "/blogdashborad/savedPost/**","/blogdashborad/allPost/view/**",
                                 "/blogdashborad/deletePost/**", "/blogdashborad/updatePost/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_GUEST")
                 .requestMatchers("/blogdashborad/approvePost/**", "/blogdashborad/rejectPost/**"
