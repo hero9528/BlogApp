@@ -206,7 +206,8 @@
             <div th:if="${msg}" id="successMessage" th:text="${msg}" style="display:none;"></div>
             <div th:if="${error}" id="errorMessage" th:text="${error}" style="display:none;"></div>
 
-            <form th:action="@{/blogdashborad/savedPost}" method="post" enctype="multipart/form-data" th:object="${post}">
+            <form th:action="@{/blogdashborad/savedPost}" method="post" enctype="multipart/form-data" th:object="${post}"
+                  onsubmit="return submitForm()">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
 
@@ -281,6 +282,13 @@
             skin: localStorage.getItem("theme") === "dark" ? "oxide-dark" : "oxide",
             content_css: localStorage.getItem("theme") === "dark" ? "dark" : "default"
         });
+        function submitForm() {
+    // 🔥 TinyMCE content sync
+    if (typeof tinymce !== "undefined") {
+        tinymce.triggerSave();
+    }
+    return true;
+}
 
         window.onload = function () {
             let msg = document.getElementById("successMessage");
